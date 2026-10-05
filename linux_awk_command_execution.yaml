@@ -1,0 +1,12 @@
+id: f3691fc8-bdef-4ce6-9936-12a06ffa4f14
+name: Linux Awk Indirect Command Execution
+description: | 
+
+requiredDataConnectors: []
+tactics:
+  - Execution
+
+query: |
+    DeviceProcessEvents
+    | where (FolderPath endswith "/awk" and ProcessCommandLine contains "BEGIN") 
+    and (ProcessCommandLine contains "system(" or ProcessCommandLine contains "exec(" or ProcessCommandLine contains "while (")

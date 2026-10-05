@@ -1,0 +1,13 @@
+id: f3691fc8-bdef-4ce6-9936-12a06ffa4f14
+name:  Linux Bootloader Configuration Mod
+description: | 
+
+requiredDataConnectors: []
+tactics:
+  - DefenseEvasion
+
+query: |
+  | where (FolderPath endswith "/sed" or FolderPath endswith "/tee" or FolderPath endswith "/echo" 
+  or FolderPath endswith "/vim" or FolderPath endswith "/vi" or FolderPath endswith "/nano") 
+  and (ProcessCommandLine contains "/etc/default/grub" or ProcessCommandLine contains "/etc/grub.d/" 
+  or ProcessCommandLine contains "/boot/grub/")
