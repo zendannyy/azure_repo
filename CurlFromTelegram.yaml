@@ -1,0 +1,13 @@
+id: c1c9d894-7829-43f2-8164-93586d5b2750
+name:  Curl From Telegram
+description: | 
+
+requiredDataConnectors: []
+tactics:
+  - DefenseEvasion
+
+query: |
+    DeviceProcessEvents
+    | where FolderPath endswith "\\curl.exe" and (ProcessCommandLine contains "api.telegram.org/s/" 
+    or ProcessCommandLine contains "telegram.me/s/" or ProcessCommandLine contains "-o" 
+    or ProcessCommandLine contains "\\AppData\\Local\\Temp\\")
