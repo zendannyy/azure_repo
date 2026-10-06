@@ -1,0 +1,42 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "workspace": {
+      "type": "string"
+    },
+    "analytic_id": {
+      "type": "string",
+      "defaultValue": "c1c9d894-7829-43f2-8164-93586d5b2750",
+      "minLength": 1,
+      "metadata": {
+        "description": "Unique id for the scheduled alert rule"
+      }
+    }
+  },
+  "resources": [
+    {
+      "type": "Microsoft.OperationalInsights/workspaces/scope/alertRules",
+      "apiVersion": "2020-01-01",
+      "name": "[format('{0}/Microsoft.SecurityInsights/{1}', parameters('workspace'), parameters('analytic_id'))]",
+      "kind": "Scheduled",
+      "location": "[resourceGroup().location]",
+      "properties": {
+        "description": "Detects curl.exe invoked with Telegram-related URLs or writing output under AppData\\Local\\Temp, which can indicate payload staging or C2 retrieval via Telegram.",
+        "displayName": "Curl From Telegram",
+        "enabled": false,
+        "query": "DeviceProcessEvents\n| where FolderPath endswith \"\\\\curl.exe\" and (ProcessCommandLine contains \"api.telegram.org/s/\" or ProcessCommandLine contains \"telegram.me/s/\" or ProcessCommandLine contains \"-o\" or ProcessCommandLine contains \"\\\\AppData\\\\Local\\\\Temp\\\\\")\n",
+        "queryFrequency": "P1D",
+        "queryPeriod": "P1D",
+        "severity": "Medium",
+        "suppressionDuration": "PT1H",
+        "suppressionEnabled": false,
+        "triggerOperator": "GreaterThan",
+        "triggerThreshold": 0,
+        "tactics": [
+          "CommandAndControl"
+        ]
+      }
+    }
+  ]
+}
