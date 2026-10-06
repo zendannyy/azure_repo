@@ -4,7 +4,7 @@ param workspace string
 @minLength(1)
 param analytic_id string = 'c1c9d894-7829-43f2-8164-93586d5b2750'
 
-resource workspace_Microsoft_SecurityInsights_analytic_id 'Microsoft.OperationalInsights/workspaces/scope/alertRules@2020-01-01' = {
+resource workspace_Microsoft_SecurityInsights_analytic_id 'Microsoft.OperationalInsights/workspaces/providers/alertRules@2020-01-01' = {
   name: '${workspace}/Microsoft.SecurityInsights/${analytic_id}'
   kind: 'Scheduled'
   location: resourceGroup().location
