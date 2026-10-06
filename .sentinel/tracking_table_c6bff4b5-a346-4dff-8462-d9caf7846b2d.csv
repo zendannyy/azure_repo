@@ -1,3 +1,5 @@
 FileName, CommitSha
 CustomDetections/MalUserAgents.bicep,845b9f651c5806ea182d54805cdc639fc961cc21
+CustomDetections/GitHubRepoPublic.bicep,311654654dc97fb14a0e95b57cc77587154b191a
+CustomDetections/CurlFromTelegram.bicep,452e5e55eecaec442b5622c57ef5add7308bab3c
 
