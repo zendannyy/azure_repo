@@ -1,4 +1,5 @@
 FileName, CommitSha
 Templates/template.bicep,ce3d49adff105261e1e2e2242cb520f05d444152
 CustomDetections/MalUserAgents.bicep,da4293aa9c7f3467599c0d0f44d21221447790e8
+CustomDetections/CurlFromTelegram.bicep,36d315889a205db2ee57973783a160558ba293ce
 
