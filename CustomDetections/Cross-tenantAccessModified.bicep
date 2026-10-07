@@ -35,7 +35,7 @@ resource workspace_Microsoft_SecurityInsights_analytic_id 'Microsoft.Operational
         | extend InitiatingAccountName = tostring(split(InitiatingUserPrincipalName, "@")[0]), InitiatingAccountUPNSuffix = tostring(split(InitiatingUserPrincipalName, "@")[1])
     '''
     queryFrequency: 'PT6H'
-    queryPeriod: 'P7TH'
+    queryPeriod: 'PT7H'
     severity: 'Medium'
     suppressionDuration: 'PT4H'
     suppressionEnabled: false
