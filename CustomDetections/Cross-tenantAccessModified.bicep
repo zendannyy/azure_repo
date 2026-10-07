@@ -11,7 +11,7 @@ resource workspace_Microsoft_SecurityInsights_analytic_id 'Microsoft.Operational
   properties: {
     description: 'Detects when Access Type in modified outbound settings for Cross-Tenant Access'
     displayName: 'Cross-tenant Access Settings Outbound Modified'
-    enabled: false
+    enabled: true
     query: '''
         // When Access Type in modified outbound settings value is 1 that means that now access is allowed. When Access Type in modified outbound settings value is 2 that means that now access is blocked.
         AuditLogs
@@ -34,10 +34,10 @@ resource workspace_Microsoft_SecurityInsights_analytic_id 'Microsoft.Operational
         | extend InitiatingIpAddress = tostring(iff(isnotempty(InitiatedBy.user.ipAddress), InitiatedBy.user.ipAddress, InitiatedBy.app.ipAddress))
         | extend InitiatingAccountName = tostring(split(InitiatingUserPrincipalName, "@")[0]), InitiatingAccountUPNSuffix = tostring(split(InitiatingUserPrincipalName, "@")[1])
     '''
-    queryFrequency: 'P1D'
-    queryPeriod: 'P1D'
+    queryFrequency: '6h'
+    queryPeriod: '7h'
     severity: 'Medium'
-    suppressionDuration: 'PT1H'
+    suppressionDuration: '4h'
     suppressionEnabled: false
     triggerOperator: 'GreaterThan'
     triggerThreshold: 0

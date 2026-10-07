@@ -11,12 +11,12 @@ resource workspace_Microsoft_SecurityInsights_analytic_id 'Microsoft.Operational
   properties: {
     description: 'Detects curl.exe invoked with Telegram-related URLs or writing output under AppData\\Local\\Temp, which can indicate payload staging or C2 retrieval via Telegram.'
     displayName: 'Curl From Telegram'
-    enabled: false
+    enabled: true
     query: 'DeviceProcessEvents\n| where FolderPath endswith "\\\\curl.exe" and (ProcessCommandLine contains "api.telegram.org/s/" or ProcessCommandLine contains "telegram.me/s/" or ProcessCommandLine contains "-o" or ProcessCommandLine contains "\\\\AppData\\\\Local\\\\Temp\\\\")\n'
-    queryFrequency: 'P1D'
-    queryPeriod: 'P1D'
+    queryFrequency: '6h'
+    queryPeriod: '7h'
     severity: 'Medium'
-    suppressionDuration: 'PT1H'
+    suppressionDuration: '4h'
     suppressionEnabled: false
     triggerOperator: 'GreaterThan'
     triggerThreshold: 0

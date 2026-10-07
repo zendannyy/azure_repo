@@ -11,12 +11,12 @@ resource workspace_Microsoft_SecurityInsights_analytic_id 'Microsoft.Operational
   properties: {
     description: 'Identifies GitHub activities where a repository was changed from private to public (repo.access MODIFY with Visibility PUBLIC).'
     displayName: 'GitHub Repo switched from private to public'
-    enabled: false
+    enabled: true
     query: 'GitHubAudit\n| where Action == "repo.access"\n| where OperationType == "MODIFY"\n| where Visibility == "PUBLIC"\n| project TimeGenerated, Action, Actor, Country, Repository, Visibility\n'
-    queryFrequency: 'P1D'
-    queryPeriod: 'P1D'
+    queryFrequency: '6h'
+    queryPeriod: '7h'
     severity: 'Medium'
-    suppressionDuration: 'PT1H'
+    suppressionDuration: '4h'
     suppressionEnabled: false
     triggerOperator: 'GreaterThan'
     triggerThreshold: 0
