@@ -34,10 +34,10 @@ resource workspace_Microsoft_SecurityInsights_analytic_id 'Microsoft.Operational
         | extend InitiatingIpAddress = tostring(iff(isnotempty(InitiatedBy.user.ipAddress), InitiatedBy.user.ipAddress, InitiatedBy.app.ipAddress))
         | extend InitiatingAccountName = tostring(split(InitiatingUserPrincipalName, "@")[0]), InitiatingAccountUPNSuffix = tostring(split(InitiatingUserPrincipalName, "@")[1])
     '''
-    queryFrequency: '6h'
-    queryPeriod: '7h'
+    queryFrequency: 'PT6H'
+    queryPeriod: 'P7TH'
     severity: 'Medium'
-    suppressionDuration: '4h'
+    suppressionDuration: 'PT4H'
     suppressionEnabled: false
     triggerOperator: 'GreaterThan'
     triggerThreshold: 0

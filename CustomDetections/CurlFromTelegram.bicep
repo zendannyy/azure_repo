@@ -13,10 +13,10 @@ resource workspace_Microsoft_SecurityInsights_analytic_id 'Microsoft.Operational
     displayName: 'Curl From Telegram'
     enabled: true
     query: 'DeviceProcessEvents\n| where FolderPath endswith "\\\\curl.exe" and (ProcessCommandLine contains "api.telegram.org/s/" or ProcessCommandLine contains "telegram.me/s/" or ProcessCommandLine contains "-o" or ProcessCommandLine contains "\\\\AppData\\\\Local\\\\Temp\\\\")\n'
-    queryFrequency: '6h'
-    queryPeriod: '7h'
+    queryFrequency: 'PT6H'
+    queryPeriod: 'PT7H'
     severity: 'Medium'
-    suppressionDuration: '4h'
+    suppressionDuration: 'PT4H'
     suppressionEnabled: false
     triggerOperator: 'GreaterThan'
     triggerThreshold: 0
