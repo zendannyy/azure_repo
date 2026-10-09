@@ -1,0 +1,47 @@
+# PR / push validation for Detection-as-Code (mirrors local pre-commit).
+# Deploy remains in the Sentinel GitHub App workflow; this gate is shift-left only.
+name: DaC validate
+
+on:
+  pull_request:
+    paths:
+      - "CustomDetections/**"
+      - "Templates/**"
+      - "scripts/precommit/**"
+      - ".pre-commit-config.yaml"
+      - "bicepconfig.json"
+      - "*.yaml"
+      - "*.yml"
+  push:
+    branches: [main]
+    paths:
+      - "CustomDetections/**"
+      - "Templates/**"
+      - "scripts/precommit/**"
+      - ".pre-commit-config.yaml"
+      - "bicepconfig.json"
+
+concurrency:
+  group: dac-validate-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  pre-commit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install Azure CLI Bicep
+        run: |
+          az bicep install --version v0.48.1
+          az bicep version
+
+      - name: Install pre-commit
+        run: pip install pre-commit
+
+      - name: Run pre-commit
+        run: pre-commit run --all-files --show-diff-on-failure
