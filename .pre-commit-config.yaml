@@ -1,0 +1,62 @@
+# Detection-as-Code pre-commit for Sentinel analytics (Bicep + ARM JSON).
+# Install:  pip install pre-commit && pre-commit install
+# Requires: Azure CLI + `az bicep install` (for bicep-lint / bicep-build)
+
+default_stages: [pre-commit]
+fail_fast: false
+
+repos:
+  # --- hygiene ---
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: trailing-whitespace
+        exclude: '\.md$'
+      - id: end-of-file-fixer
+      - id: check-merge-conflict
+      - id: check-added-large-files
+        args: ["--maxkb=500"]
+      - id: check-json
+        files: '\.json$'
+      - id: check-yaml
+        files: '\.ya?ml$'
+      - id: detect-private-key
+      - id: mixed-line-ending
+        args: ["--fix=lf"]
+
+  # --- secrets (block accidental credentials; Azure OIDC secret *refs* are fine) ---
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.24.2
+    hooks:
+      - id: gitleaks
+
+  # --- Bicep compile + lint (local; needs az + bicep) ---
+  - repo: local
+    hooks:
+      - id: bicep-lint
+        name: az bicep lint
+        entry: bash scripts/precommit/bicep_lint.sh
+        language: system
+        files: '\.bicep$'
+        pass_filenames: true
+
+      - id: bicep-build
+        name: az bicep build
+        entry: bash scripts/precommit/bicep_build.sh
+        language: system
+        files: '\.bicep$'
+        pass_filenames: true
+
+      - id: analytic-id-unique
+        name: unique analytic_id across CustomDetections
+        entry: python3 scripts/precommit/check_analytic_ids.py
+        language: system
+        files: '^CustomDetections/.*\.(bicep|json)$'
+        pass_filenames: false
+
+      - id: alert-rule-schema
+        name: Scheduled alert-rule schema (CustomDetections)
+        entry: python3 scripts/precommit/check_alert_rule_schema.py
+        language: system
+        files: '^CustomDetections/.*\.(bicep|json)$'
+        pass_filenames: true
