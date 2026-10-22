@@ -10,7 +10,6 @@ on:
       - "scripts/precommit/**"
       - ".pre-commit-config.yaml"
       - "bicepconfig.json"
-      - "*.yaml"
       - "*.yml"
   push:
     branches: [main]
