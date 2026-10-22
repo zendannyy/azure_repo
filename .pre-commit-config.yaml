@@ -24,7 +24,7 @@ repos:
       - id: mixed-line-ending
         args: ["--fix=lf"]
 
-  # --- secrets (block accidental credentials; Azure OIDC secret *refs* are fine) ---
+  # --- secrets (detect accidental credentials; Azure OIDC secret *refs* are fine) ---
   - repo: https://github.com/gitleaks/gitleaks
     rev: v8.24.2
     hooks:
