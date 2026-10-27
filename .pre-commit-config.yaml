@@ -54,6 +54,7 @@ repos:
         files: '^CustomDetections/.*\.(bicep|json)$'
         pass_filenames: false
 
+      # chdecks and validates rules
       - id: alert-rule-schema
         name: Scheduled alert-rule schema (CustomDetections)
         entry: python3 scripts/precommit/check_alert_rule_schema.py
